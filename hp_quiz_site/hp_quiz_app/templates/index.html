@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Harry Potter kvízjáték</title>
+        <meta charset="UTF-8"> 
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+    <h1>Kérdések</h1>
+ 
+    <table border="1">
+        <tr>
+            <th>Kérdés</th>
+            <th>Helyes válasz</th>
+            <th>Módosítás</th>
+            <th>Törlés</th>
+        </tr>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.question }}</td>
+                <td>{{ question.correct_option }}</td>
+                <td><a href="question/update/{{ question.id }}">módosít</a></td>
+                <td><a href="question/delete/{{ question.id }}">töröl</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+ 
+    <p>
+        <h3>
+        <a href="question/add/">Kérdést hozzáad</a>
+        </h3>
+    </p>
+ 
+    <h1>Válaszlehetőségek</h1>
+ 
+    <table border="1">
+        <tr>
+            <th>Kérdés</th>
+            <th>A)</th>
+            <th>B)</th>
+            <th>C)</th>
+            <th>D)</th>
+            <th>Módosítás</th>
+            <th>Törlés</th>
+        </tr>
+        {% for option in options %}
+            <tr>
+                    <td>{{ option.question }}</td>
+                    <td>{{ option.option_a }}</td>
+                    <td>{{ option.option_b }}</td>
+                    <td>{{ option.option_c }}</td>
+                    <td>{{ option.option_d }}</td>
+                    <td><a href="{% url 'update_options' option.question.id %}">módosít</a></td>
+                    <td><a href="{% url 'delete_options' option.id %}">töröl</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+ 
+    <p>
+        <h3>
+        <a href="options/add/">Válaszlehetőségeket hozzáad</a>
+        </h3>
+    </p>
+ 
+    </ul>
+    </body>
+</html>

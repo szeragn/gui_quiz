@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<head> 
+    <title>Kérdést {% if question %} módosít {% else %} hozzáad {% endif %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<h1>Kérdést {% if question %} módosít {% else %} hozzáad {% endif %}</h1>
+ 
+<form action= {% if question %} "updaterecord/{{ question.id }}" {% else %} "addrecord" {% endif %} method="post">
+    {% csrf_token %}
+    Kérdés: <input name="question" {% if question %} value="{{ question.question }}" {% endif %}>
+
+    Helyes válasz:
+    <select name="correct_option">
+        <option value="A" {% if options and options.correct_option == "A" %}selected{% endif %}>A</option>
+        <option value="B" {% if options and options.correct_option == "B" %}selected{% endif %}>B</option>
+        <option value="C" {% if options and options.correct_option == "C" %}selected{% endif %}>C</option>
+        <option value="D" {% if options and options.correct_option == "D" %}selected{% endif %}>D</option>
+    </select>    
+ 
+    <input type="submit" value={% if question %} "Módosít" {% else %} "Hozzáad" {% endif %}>
+</form>

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<head> 
+    <title>Válaszlehetőséget {% if options %} módosít {% else %} hozzáad {% endif %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<h1>Válaszehetőséget {% if options %} módosít {% else %} hozzáad {% endif %}</h1>
+ 
+<form action="{% if options %}updaterecord/{{ options.id }}{% else %}addrecord{% endif %}" method="post">
+
+    {% csrf_token %}
+    A): <input name="option_a" {% if options %} value="{{ options.option_a }}" {% endif %}>
+    <br>
+    B): <input name="option_b" {% if options %} value="{{ options.option_b }}" {% endif %}>
+    <br>
+    C): <input name="option_c" {% if options %} value="{{ options.option_c }}" {% endif %}>
+    <br>
+    D): <input name="option_d" {% if options %} value="{{ options.option_d }}" {% endif %}>
+    <br>
+    
+    Kérdés:
+    <select name="question_id">
+    {% for question in questions %}
+        <option value="{{ question.id }}"{% if options and options.question_id == question.id %} selected{% endif %}>{{ question.question }}</option>
+    {% endfor %}
+    </select>
+    <br>
+
+    <input type="submit" value="{% if options %}Módosít{% else %}Hozzáad{% endif %}">
+</form>
